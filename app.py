@@ -79,3 +79,101 @@ def oauth2callback():
     }
 
     return redirect("/dashboard")
+@app.route("/dashboard")
+def dashboard():
+    credentials = get_credentials()
+    if not credentials:
+        return redirect("/")
+
+    classroom = build("classroom", "v1", credentials=credentials)
+    courses_response = classroom.courses().list().execute()
+    courses = courses_response.get("courses", [])
+
+    simplified_courses = [
+        {"id": c["id"], "name": c["name"]}
+        for c in courses
+    ]
+
+    return render_template("dashboard.html", courses=simplified_courses)
+
+@app.route("/course/<course_id>")
+def course_assignments(course_id):
+    credentials = get_credentials()
+    if not credentials:
+        return redirect("/")
+
+    classroom = build("classroom", "v1", credentials=credentials)
+    coursework_response = classroom.courses().courseWork().list(
+        courseId=course_id
+    ).execute()
+
+    assignments = coursework_response.get("courseWork", [])
+
+    simplified_assignments = [
+        {"id": w["id"], "title": w["title"]}
+        for w in assignments
+    ]
+
+    return render_template(
+        "assignments.html",
+        assignments=simplified_assignments,
+        course_id=course_id
+    )
+
+@app.route("/submissions/<course_id>/<coursework_id>")
+def submissions(course_id, coursework_id):
+    credentials = get_credentials()
+    if not credentials:
+        return redirect("/")
+
+    classroom = build("classroom", "v1", credentials=credentials)
+
+    submissions_response = classroom.courses().courseWork().studentSubmissions().list(
+        courseId=course_id,
+        courseWorkId=coursework_id
+    ).execute()
+
+    submissions_data = submissions_response.get("studentSubmissions", [])
+    extracted = []
+
+    for s in submissions_data:
+        if s.get("state") != "TURNED_IN":
+            continue
+
+        assignment = s.get("assignmentSubmission", {})
+        attachments = assignment.get("attachments", [])
+
+        for a in attachments:
+            drive_file = a.get("driveFile")
+            if not drive_file:
+                continue
+
+            file_id = drive_file["id"]
+            file_name = drive_file["title"]
+
+            try:
+                text = extract_text_from_drive_pdf(file_id, credentials)
+            except Exception:
+                text = ""
+
+            extracted.append({
+                "userId": s.get("userId"),
+                "fileName": file_name,
+                "full_text": text,
+                "preview": text[:1500]
+            })
+
+    plagiarism_results = compute_plagiarism(extracted)
+    plagiarism_results.sort(key=lambda x: x["similarity"], reverse=True)
+
+    return render_template(
+        "submissions.html",
+        submissions=extracted,
+        plagiarism=plagiarism_results,
+        course_id=course_id
+    )
+
+# ---------- RUN ----------
+
+if __name__ == "__main__":
+    app.run(debug=True)
