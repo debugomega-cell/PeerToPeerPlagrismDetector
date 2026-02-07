@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f1f3f4;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #202124;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            color: #5f6368;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .dashboard {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .course {
+            background: white;
+            padding: 18px 22px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .course:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .course-name {
+            font-size: 16px;
+            color: #202124;
+            font-weight: 500;
+        }
+
+        .course a {
+            text-decoration: none;
+            background: #1a73e8;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .course a:hover {
+            background: #1558b0;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            color: #5f6368;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            background: #e8f0fe;
+            color: #1a73e8;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <header>
+        <h1>Teacher Dashboard</h1>
+        <h3>Your Google Classroom Courses</h3>
+    </header>
+
+    {% if courses|length == 0 %}
+        <div class="empty">
+            No courses found for this account.
+        </div>
+    {% endif %}
+
+    {% for course in courses %}
+        <div class="course">
+            <div class="course-name">
+                {{ course.name }}
+                <span class="badge">Active</span>
+            </div>
+            <a href="/course/{{ course.id }}">
+                View Assignments →
+            </a>
+        </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
