@@ -31,3 +31,51 @@ SCOPES = [
     "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly",
     "https://www.googleapis.com/auth/drive.readonly"
 ]
+
+
+# ---------- routes ----------
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/login")
+def login_page():
+    return render_template("login.html")
+
+@app.route("/logintogoogle")
+def login():
+    flow = Flow.from_client_secrets_file(
+        "client_secret.json",
+        scopes=SCOPES,
+        redirect_uri="http://localhost:5000/oauth2callback"
+    )
+
+    authorization_url, state = flow.authorization_url(
+        access_type="offline",
+        prompt="consent"
+    )
+
+    session["state"] = state
+    return redirect(authorization_url)
+
+@app.route("/oauth2callback")
+def oauth2callback():
+    flow = Flow.from_client_secrets_file(
+        "client_secret.json",
+        scopes=SCOPES,
+        redirect_uri="http://localhost:5000/oauth2callback"
+    )
+
+    flow.fetch_token(authorization_response=request.url)
+
+    session["credentials"] = {
+        "token": flow.credentials.token,
+        "refresh_token": flow.credentials.refresh_token,
+        "token_uri": flow.credentials.token_uri,
+        "client_id": flow.credentials.client_id,
+        "client_secret": flow.credentials.client_secret,
+        "scopes": flow.credentials.scopes,
+    }
+
+    return redirect("/dashboard")
