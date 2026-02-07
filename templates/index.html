@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peer-to-Peer Plagiarism Detection</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f1f3f4;
+            color: #202124;
+        }
+
+        /* ---------- HEADER ---------- */
+        header {
+            background: white;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a73e8;
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #1a73e8;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            padding: 80px 60px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #5f6368;
+            line-height: 1.7;
+        }
+
+        .hero button {
+            margin-top: 30px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .hero button:hover {
+            background: #1558c0;
+        }
+
+        .hero img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        /* ---------- FEATURES ---------- */
+        .features {
+            background: white;
+            padding: 80px 60px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 14px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #1a73e8;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.6;
+        }
+
+        /* ---------- ABOUT ---------- */
+        .about {
+            padding: 80px 60px;
+            background: #f1f3f4;
+        }
+
+        .about h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            max-width: 900px;
+            font-size: 16px;
+            color: #5f6368;
+            line-height: 1.7;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: #202124;
+            color: #bdc1c6;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Peer-to-Peer Plagiarism Checker</div>
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="/login">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div>
+        <h1>Peer-to-Peer Plagiarism Detection for Google Classroom</h1>
+        <p>
+            Detect copying between students automatically.
+            Compare assignments, analyze similarity using AI techniques,
+            and help teachers identify plagiarism without manual checking.
+        </p>
+
+        <a href="/login">
+            <button>Sign in with Google</button>
+        </a>
+    </div>
+
+    <img src="https://cdn.prod.website-files.com/61e7d259b7746e3f63f0b6be/6734714f858b622e66937c78_656710571280a477e22da1d4_Plagiarism%2520(3).jpeg" alt="Plagiarism detection">
+</section>
+
+<section id="features" class="features">
+    <h2>Key Features</h2>
+
+    <div class="feature-grid">
+        <div class="feature">
+            <h3>Google Classroom Integration</h3>
+            <p>
+                Secure login using Google OAuth and automatic access to
+                courses, assignments, and student submissions.
+            </p>
+        </div>
+
+        <div class="feature">
+            <h3>Peer-to-Peer Plagiarism Detection</h3>
+            <p>
+                Detect similarity between students’ submissions using
+                TF-IDF vectorization and cosine similarity.
+            </p>
+        </div>
+
+        <div class="feature">
+            <h3>PDF Text Extraction</h3>
+            <p>
+                Automatically extracts text from uploaded PDF assignments
+                using Google Drive and PDF parsing.
+            </p>
+        </div>
+
+        <div class="feature">
+            <h3>Similarity Reports</h3>
+            <p>
+                Clear plagiarism reports showing student pairs
+                and percentage similarity.
+            </p>
+        </div>
+
+        <div class="feature">
+            <h3>Student-wise Search</h3>
+            <p>
+                Filter submissions instantly using student IDs
+                for faster inspection.
+            </p>
+        </div>
+
+        <div class="feature">
+            <h3>Teacher-Friendly Interface</h3>
+            <p>
+                Clean dashboard designed for teachers with no
+                technical complexity.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <h2>About This Project</h2>
+    <p>
+        This project is designed to help teachers detect plagiarism
+        between student submissions in Google Classroom.
+        Unlike traditional plagiarism checkers that compare content
+        against the internet, this system focuses on peer-to-peer
+        similarity — the most common form of copying in classrooms.
+        <br><br>
+        Built using Flask, Google Classroom API, Google Drive API,
+        PDF text extraction, and machine learning techniques,
+        this tool automates a time-consuming task for educators.
+    </p>
+</section>
+
+<footer>
+    © 2026 Peer-to-Peer Plagiarism Detection • Built for Academic Use
+</footer>
+
+</body>
+</html>
