@@ -71,6 +71,35 @@ def extract_text_from_drive_pdf(file_id, credentials):
         text += page.extract_text() or ""
 
     return text.strip()
+
+
+def compute_plagiarism(submissions):
+    texts = [clean_text(s["full_text"]) for s in submissions]
+    users = [s["userId"] for s in submissions]
+
+    if len(texts) < 2:
+        return []
+
+    vectorizer = TfidfVectorizer(stop_words="english", ngram_range=(1, 2))
+    tfidf_matrix = vectorizer.fit_transform(texts)
+    similarity_matrix = cosine_similarity(tfidf_matrix)
+
+    results = []
+
+    for i in range(len(users)):
+        for j in range(i + 1, len(users)):
+            score = similarity_matrix[i][j] * 100
+
+            if score > 15:
+                results.append({
+                    "student_1": users[i],
+                    "student_2": users[j],
+                    "similarity": round(score, 2),
+                    "text_1": submissions[i]["preview"],
+                    "text_2": submissions[j]["preview"]
+                })
+
+    return results
 # ---------- routes ----------
 
 @app.route("/")

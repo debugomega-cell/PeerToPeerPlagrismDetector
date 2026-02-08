@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Submissions</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f1f3f4;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #1a73e8;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 24px;
+    padding: 6px 12px;
+}
+
+.search-input input {
+    border: none;
+    outline: none;
+}
+
+.submission {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.submission-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.student-id {
+    font-size: 13px;
+    color: #5f6368;
+}
+
+pre {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.report {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.plagiarism-item {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.similarity {
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+}
+
+.high { background: #d93025; }
+.medium { background: #f9ab00; }
+
+.compare-toggle {
+    cursor: pointer;
+    color: #1a73e8;
+    margin-left: 10px;
+}
+
+.compare-box {
+    display: none;
+    margin-top: 15px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.side-by-side {
+    display: flex;
+    gap: 12px;
+}
+
+.compare-text {
+    width: 50%;
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.no-plagiarism {
+    background: #e6f4ea;
+    color: #188038;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="/course/{{ course_id }}" class="back-btn">← Back to Assignments</a>
+
+<div class="header">
+<h1>Student Submissions</h1>
+
+<div class="search-input">
+<input type="text" id="searchInput" placeholder="Search student ID" onkeyup="filterStudents()">
+</div>
+</div>
+
+<!-- ===== SUBMISSIONS ===== -->
+
+{% for s in submissions %}
+<div class="submission" data-student="{{ s.userId }}">
+<div class="submission-header">
+<span>{{ s.fileName }}</span>
+<span class="student-id">ID: {{ s.userId }}</span>
+</div>
+<pre>{{ s.preview }}</pre>
+</div>
+{% endfor %}
+
+<!-- ===== PLAGIARISM REPORT ===== -->
+
+<h2>Plagiarism Report</h2>
+
+<div class="report">
+
+{% if plagiarism|length == 0 %}
+<div class="no-plagiarism">✅ No plagiarism detected.</div>
+{% endif %}
+
+{% for p in plagiarism %}
+
+<div class="plagiarism-item">
+
+<div>
+Student {{ p.student_1 }} ↔ Student {{ p.student_2 }}
+<span class="compare-toggle"
+onclick="toggleCompare('cmp{{ loop.index }}')">
+Compare Text
+</span>
+</div>
+
+{% if p.similarity >= 70 %}
+<div class="similarity high">{{ p.similarity }}%</div>
+{% else %}
+<div class="similarity medium">{{ p.similarity }}%</div>
+{% endif %}
+
+</div>
+
+<div id="cmp{{ loop.index }}" class="compare-box">
+
+<div class="side-by-side">
+
+<div class="compare-text">
+<strong>Student {{ p.student_1 }}</strong>
+<pre>{{ p.text_1 }}</pre>
+</div>
+
+<div class="compare-text">
+<strong>Student {{ p.student_2 }}</strong>
+<pre>{{ p.text_2 }}</pre>
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<footer>
+Peer-to-Peer Plagiarism Detection • Google Classroom Integration
+</footer>
+
+</div>
+
+<script>
+function filterStudents() {
+const input = document.getElementById("searchInput").value.toLowerCase();
+const cards = document.getElementsByClassName("submission");
+
+for (let card of cards) {
+const id = card.getAttribute("data-student");
+card.style.display = id.toLowerCase().includes(input) ? "block" : "none";
+}
+}
+
+function toggleCompare(id) {
+const box = document.getElementById(id);
+if (!box) return;
+box.style.display = box.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
