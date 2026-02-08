@@ -33,6 +33,44 @@ SCOPES = [
 ]
 
 
+
+def clean_text(text):
+    text = text.lower()
+    text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"[^a-z0-9 ]", "", text)
+    return text.strip()
+
+def get_credentials():
+    if "credentials" not in session:
+        return None
+
+    return Credentials(
+        token=session["credentials"]["token"],
+        refresh_token=session["credentials"]["refresh_token"],
+        token_uri=session["credentials"]["token_uri"],
+        client_id=session["credentials"]["client_id"],
+        client_secret=session["credentials"]["client_secret"],
+        scopes=session["credentials"]["scopes"],
+    )
+
+def extract_text_from_drive_pdf(file_id, credentials):
+    drive_service = build("drive", "v3", credentials=credentials)
+    request = drive_service.files().get_media(fileId=file_id)
+    file_stream = io.BytesIO()
+
+    downloader = MediaIoBaseDownload(file_stream, request)
+    done = False
+    while not done:
+        _, done = downloader.next_chunk()
+
+    file_stream.seek(0)
+    reader = PdfReader(file_stream)
+
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() or ""
+
+    return text.strip()
 # ---------- routes ----------
 
 @app.route("/")
