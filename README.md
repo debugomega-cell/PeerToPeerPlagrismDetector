@@ -47,17 +47,43 @@ git clone <your-repo-url>
 cd PeerToPeerPlagiarismDetector
 ```
 
+---
+
 ### 2. Create virtual environment (recommended)
+
+**Windows (PowerShell):**
 
 ```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+.\venv\Scripts\Activate
 ```
 
-### 3. Install dependencies
+**Mac/Linux:**
 
 ```bash
-pip install -r requirements.txt
+python -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## ⚡ Manual Dependency Installation
+
+If you are not using `requirements.txt`, install packages manually:
+
+```bash
+pip install flask
+pip install scikit-learn
+pip install PyPDF2
+pip install google-auth
+pip install google-auth-oauthlib
+pip install google-api-python-client
+```
+
+Optional — generate requirements file later:
+
+```bash
+pip freeze > requirements.txt
 ```
 
 ---
@@ -95,7 +121,7 @@ http://localhost:5000
 project/
 │
 ├── app.py
-├── requirements.txt
+├── requirements.txt (optional)
 ├── client_secret.json
 │
 ├── templates/
@@ -112,9 +138,9 @@ project/
 
 ## ⚠ Notes
 
-* Designed for educational and hackathon use.
-* Only PDF submissions are processed.
-* Similarity threshold can be customized in the code.
+* Designed for educational and hackathon use
+* Only PDF submissions are processed
+* Similarity threshold can be customized
 
 ---
 
@@ -129,7 +155,7 @@ project/
 
 ## 👨‍💻 Author
 
-Hackathon project built for learning NLP + API integration.
+Hackathon project built for learning NLP and API integration.
 
 ---
 
