@@ -110,7 +110,8 @@ def login():
     flow = Flow.from_client_secrets_file(
         "client_secret.json",
         scopes=SCOPES,
-        redirect_uri="http://localhost:5000/oauth2callback"
+        redirect_uri=request.url_root + "oauth2callback"
+
     )
 
     authorization_url, state = flow.authorization_url(
