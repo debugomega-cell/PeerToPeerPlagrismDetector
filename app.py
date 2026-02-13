@@ -10,6 +10,7 @@ import os
 import io
 import re
 
+
 app = Flask(__name__)
 app.secret_key = "dev_secret_key"
 
@@ -125,7 +126,8 @@ def oauth2callback():
     flow = Flow.from_client_secrets_file(
         "client_secret.json",
         scopes=SCOPES,
-        redirect_uri="http://localhost:5000/oauth2callback"
+        redirect_uri=request.url_root + "oauth2callback"
+
     )
 
     flow.fetch_token(authorization_response=request.url)
