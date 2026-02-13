@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignments</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f1f3f4;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #202124;
+            margin-bottom: 25px;
+        }
+
+        .assignment {
+            background: white;
+            padding: 18px 22px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .assignment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .assignment-title {
+            font-size: 16px;
+            color: #202124;
+            font-weight: 500;
+        }
+
+        .assignment a {
+            text-decoration: none;
+            background: #34a853;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .assignment a:hover {
+            background: #2a8a43;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            color: #5f6368;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+        .back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #1a73e8;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #5f6368;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+
+
+    <h1>Assignments</h1>
+
+    {% if assignments|length == 0 %}
+        <div class="empty">
+            No assignments found for this course.
+        </div>
+    {% endif %}
+
+    {% for a in assignments %}
+        <div class="assignment">
+            <div class="assignment-title">
+                {{ a.title }}
+            </div>
+            <a href="/submissions/{{ course_id }}/{{ a.id }}">
+                Check Plagiarism →
+            </a>
+        </div>
+    {% endfor %}
+
+    <footer>
+        Select an assignment to analyze student submissions
+    </footer>
+
+</div>
+
+</body>
+</html>

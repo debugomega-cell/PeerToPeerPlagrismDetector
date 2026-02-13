@@ -2,39 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', "Segoe UI", Arial, sans-serif;
-            background: #f8f9fa;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f1f3f4;
             padding: 40px;
-            min-height: 100vh;
         }
 
         h1 {
-            color: #1a1a2e;
+            color: #202124;
             margin-bottom: 5px;
-            font-size: 36px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
         }
 
         h3 {
             color: #5f6368;
-            margin-bottom: 35px;
-            font-weight: 400;
-            font-size: 16px;
+            margin-bottom: 30px;
+            font-weight: normal;
         }
 
         .dashboard {
@@ -42,222 +28,63 @@
             margin: auto;
         }
 
-        /* Header with icon */
-        header {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 25px;
-        }
-
-        header::before {
-            content: "\f19d";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            top: 5px;
-            font-size: 38px;
-            color: #1a73e8;
-        }
-
-        /* Stats bar */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 35px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            border-left: 4px solid #1a73e8;
-            transition: all 0.3s ease;
-            position: relative;
-            padding-left: 65px;
-        }
-
-        .stat-card::before {
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 28px;
-            color: rgba(26, 115, 232, 0.2);
-        }
-
-        .stat-card:nth-child(1)::before { content: "\f19d"; }
-        .stat-card:nth-child(2)::before { content: "\f15c"; }
-        .stat-card:nth-child(3)::before { content: "\f501"; }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.15);
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a73e8;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #5f6368;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
         .course {
             background: white;
-            padding: 22px 26px;
-            margin-bottom: 14px;
-            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 15px;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-            position: relative;
-            padding-left: 60px;
-        }
-
-        /* Course icon */
-        .course::before {
-            content: "\f02d";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: rgba(26, 115, 232, 0.25);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .course:hover {
-            transform: translateX(4px);
-            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.15);
-            border-left-color: #1a73e8;
-        }
-
-        .course:hover::before {
-            color: #1a73e8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
 
         .course-name {
-            font-size: 17px;
+            font-size: 16px;
             color: #202124;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .course:hover .course-name {
-            color: #1a73e8;
+            font-weight: 500;
         }
 
         .course a {
             text-decoration: none;
-            background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+            background: #1a73e8;
             color: white;
-            padding: 10px 22px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
             font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
-        }
-
-        .course a::after {
-            content: "\f061";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            margin-left: 8px;
+            transition: background 0.2s ease;
         }
 
         .course a:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 18px rgba(26, 115, 232, 0.45);
+            background: #1558b0;
         }
 
         .empty {
             background: white;
-            padding: 60px 30px;
-            border-radius: 12px;
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
             color: #5f6368;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .empty::before {
-            content: "\f119";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            display: block;
-            font-size: 60px;
-            color: rgba(26, 115, 232, 0.15);
-            margin-bottom: 20px;
+        header {
+            margin-bottom: 30px;
         }
 
         .badge {
-            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-            color: #2e7d32;
-            padding: 4px 12px;
-            border-radius: 16px;
-            font-size: 11px;
-            margin-left: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(46, 125, 50, 0.2);
-        }
-
-        .badge::before {
-            content: "\f00c";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            margin-right: 5px;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-
-            .course {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-                padding-left: 26px;
-            }
-
-            .course::before {
-                left: 50%;
-                top: 22px;
-                transform: translateX(-50%);
-            }
-
-            .course a {
-                width: 100%;
-                text-align: center;
-            }
+            background: #e8f0fe;
+            color: #1a73e8;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -270,21 +97,6 @@
         <h1>Teacher Dashboard</h1>
         <h3>Your Google Classroom Courses</h3>
     </header>
-
-    <div class="stats-container">
-        <div class="stat-card">
-            <div class="stat-number">{{ courses|length }}</div>
-            <div class="stat-label">Active Courses</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">{{ courses|length * 8 }}</div>
-            <div class="stat-label">Assignments</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">{{ courses|length * 30 }}</div>
-            <div class="stat-label">Students</div>
-        </div>
-    </div>
 
     {% if courses|length == 0 %}
         <div class="empty">
@@ -299,7 +111,7 @@
                 <span class="badge">Active</span>
             </div>
             <a href="/course/{{ course.id }}">
-                View Assignments
+                View Assignments →
             </a>
         </div>
     {% endfor %}
