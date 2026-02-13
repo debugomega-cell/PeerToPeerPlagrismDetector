@@ -1,97 +1,179 @@
-PeerToPeer Plagiarism Detector
-A Python-based web application that detects similarity between student submissions using Natural Language Processing (NLP). The app integrates with Google Classroom to fetch assignments, extract PDF content, and compute plagiarism scores using TF-IDF and cosine similarity.
+# Peer-to-Peer Plagiarism Detector
 
-🚀 Features
-Google Classroom login via OAuth
-Fetch student submissions automatically
-Extract text from PDF files
-Clean and preprocess text data
-TF-IDF based similarity comparison
-Pairwise plagiarism scoring
-Simple Flask web dashboard
-🧠 How It Works
-Students submit assignments in Google Classroom.
-The app downloads PDF submissions using Google Drive API.
-Text is extracted and cleaned.
-TF-IDF vectorization converts text to numerical form.
-Cosine similarity detects matching content.
-Results are displayed with similarity percentages.
-🛠 Tech Stack
-Python 3
-Flask
-scikit-learn (TF-IDF + cosine similarity)
-PyPDF2
-Google Classroom API
-Google Drive API
-📦 Installation
-1. Clone the repository
-git clone <your-repo-url>
-cd PeerToPeerPlagiarismDetector
-2. Create virtual environment (recommended)
-Windows (PowerShell):
+A Python-based web application that detects similarity between student submissions using Natural Language Processing (NLP). The system compares uploaded documents and calculates plagiarism scores using TF-IDF vectorization and cosine similarity.
 
-python -m venv venv
-.\venv\Scripts\Activate
-Mac/Linux:
+The app is designed for academic use and can integrate with Google Classroom to fetch submissions automatically.
 
-python -m venv venv
-source venv/bin/activate
-⚡ Manual Dependency Installation
-If you are not using requirements.txt, install packages manually:
+---
 
-pip install flask
-pip install scikit-learn
-pip install PyPDF2
-pip install google-auth
-pip install google-auth-oauthlib
-pip install google-api-python-client
-Optional — generate requirements file later:
+## 🚀 Features
 
-pip freeze > requirements.txt
-🔑 Google API Setup
-Create a Google Cloud project.
+* Upload and compare multiple documents
+* Automatic text cleaning & preprocessing
+* TF-IDF similarity scoring
+* Cosine similarity plagiarism detection
+* PDF text extraction
+* Optional Google Classroom integration
+* Clean web dashboard interface
 
-Enable:
+---
 
-Google Classroom API
-Google Drive API
-Create OAuth credentials.
+## 🛠 Tech Stack
 
-Download client_secret.json.
+Frontend:
 
-Place it in the project root directory.
+* HTML / CSS / JavaScript
 
-▶ Run the App
-python app.py
-Open browser:
+Backend:
 
-http://localhost:5000
-📁 Project Structure
-project/
+* Python
+* Flask
+
+Libraries:
+
+* Scikit-learn
+* NumPy
+* PDF processing tools
+
+Deployment:
+
+* Render
+
+---
+
+## 📂 Project Structure
+
+peer-plagiarism/
 │
 ├── app.py
-├── requirements.txt (optional)
-├── client_secret.json
-│
+├── requirements.txt
+├── Procfile
 ├── templates/
-│   ├── index.html
-│   ├── login.html
-│   ├── dashboard.html
-│   ├── assignments.html
-│   └── submissions.html
-│
-└── static/
-⚠ Notes
-Designed for educational and hackathon use
-Only PDF submissions are processed
-Similarity threshold can be customized
-🎯 Future Improvements
-Multi-file format support
-Highlight matching text segments
-Database storage
-Admin analytics dashboard
-👨‍💻 Author
-Hackathon project built for learning NLP and API integration.
+├── static/
+└── README.md
 
-📜 License
-MIT License — free to use and modify.
+---
+
+## ⚙ Installation (Local Setup)
+
+### 1. Clone the repository
+
+git clone https://github.com/your-username/peer-plagiarism.git
+cd peer-plagiarism
+
+### 2. Create virtual environment
+
+python -m venv venv
+
+Activate environment:
+
+Windows:
+venv\Scripts\activate
+
+Mac/Linux:
+source venv/bin/activate
+
+### 3. Install dependencies
+
+pip install -r requirements.txt
+
+### 4. Run the app
+
+python app.py
+
+Open browser:
+
+http://127.0.0.1:5000
+
+---
+
+## 🌐 Deployment (Render)
+
+### Step 1 — Prepare files
+
+Create requirements.txt:
+
+pip freeze > requirements.txt
+
+Create Procfile:
+
+web: gunicorn app:app
+
+---
+
+### Step 2 — Push to GitHub
+
+git init
+git add .
+git commit -m "deploy app"
+git push
+
+---
+
+### Step 3 — Deploy on Render
+
+1. Go to https://render.com
+2. Login with GitHub
+3. New → Web Service
+4. Select repository
+
+Settings:
+
+Build command:
+pip install -r requirements.txt
+
+Start command:
+gunicorn app:app
+
+Click **Deploy**.
+
+Render will generate a public URL:
+
+https://your-app-name.onrender.com
+
+---
+
+## 🔐 Google Classroom Integration (Optional)
+
+If using OAuth:
+
+Update redirect URI in Google Cloud Console:
+
+https://your-app-name.onrender.com/callback
+
+---
+
+## 📊 How Plagiarism Detection Works
+
+1. Extract text from documents
+2. Clean and normalize text
+3. Convert to TF-IDF vectors
+4. Compute cosine similarity
+5. Display plagiarism percentage
+
+---
+
+## 🧠 Future Improvements
+
+* Real-time classroom sync
+* AI-based semantic comparison
+* Report export system
+* Teacher dashboard analytics
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, open an issue first to discuss what you’d like to improve.
+
+---
+
+## 📜 License
+
+This project is for educational purposes. Modify and use freely.
+
+---
+
+## ✨ Author
+
+Developed as a peer-to-peer plagiarism detection tool to support academic integrity.
